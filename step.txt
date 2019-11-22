@@ -1,0 +1,2 @@
+1.將 admain.php 改為 html 排版
+2.從 admain.php 找到 圖101 的程式碼，存成 main.php 並把原位改成 <?php include ("main.php")?>
