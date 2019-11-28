@@ -65,7 +65,7 @@ print_r($limit);
 
 echo "<br>條件<br>";
 
-$limit =  all("admin",['pw'=>'1234']);
+$limit =  all("admin",[ 'acc'=>'aaa','pw'=>'123']);
 print_r($limit);
 
 echo "<br>限制筆數<br>";
@@ -144,12 +144,12 @@ function save($table, $data){
     
     if(!empty($data['id'])){
         // update
-        $sql = " UPDATE $table SET ";
         foreach($data as $key => $value){
-            $tmp[] = sprintf("`%s`='%s'", $key, $value);
+            if( $key != "id"){
+                $tmp[] = sprintf("`%s`='%s'", $key, $value);
+            }
         }
-
-        $sql = $sql . implode(",", $tmp) . "  WHERE  `id`=" . $data['id'];
+        $sql = " UPDATE $table SET " . implode(",", $tmp) . "  WHERE  `id`=" . $data['id'];
     }else{
         // insert
         $key="`" . implode("`,`",array_keys($data)) . "`";
