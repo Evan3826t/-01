@@ -1,9 +1,8 @@
 <?php
 
-$dsn = "mysql:host=localhost;charser=utf8;dbname=db111";
+$dsn = "mysql:host=localhost;charset=utf8;dbname=db111";
 $pdo = new PDO($dsn, "root", "123");
 session_start();
-
 
 // 資料表要開空值，如果沒開給空值會錯誤
 // 查詢及取得特定條件的全部資料
@@ -32,9 +31,9 @@ function find($table,...$arg){
     return $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 }
 
-print_r(find( "admin", 2));
-echo "<br>";
-print_r(find( "admin", ["acc"=>"aaa", "pw"=>"123"]));
+// print_r(find( "admin", 2));
+// echo "<br>";
+// print_r(find( "admin", ["acc"=>"aaa", "pw"=>"123"]));
 
 function all( $table, ...$arg){
     global $pdo;
@@ -52,26 +51,26 @@ function all( $table, ...$arg){
         $sql = $sql . $arg[1];
     }
 
-    echo "<br>" .$sql . "<br>";
+    // echo "<br>" .$sql . "<br>";
     return $pdo->query($sql)->fetchAll();
 }
 
-$rows =  all("admin");
-print_r($rows);
-echo "<br>";
+// $rows =  all("admin");
+// print_r($rows);
+// echo "<br>";
 
-$limit =  all("admin",[]," limit 2");
-print_r($limit);
+// $limit =  all("admin",[]," limit 2");
+// print_r($limit);
 
-echo "<br>條件<br>";
+// echo "<br>條件<br>";
 
-$limit =  all("admin",[ 'acc'=>'aaa','pw'=>'123']);
-print_r($limit);
+// $limit =  all("admin",[ 'acc'=>'aaa','pw'=>'123']);
+// print_r($limit);
 
-echo "<br>限制筆數<br>";
+// echo "<br>限制筆數<br>";
 
-$limit =  all("admin",['pw'=>'1234']," limit 1");
-print_r($limit);
+// $limit =  all("admin",['pw'=>'1234']," limit 1");
+// print_r($limit);
 
 
 
@@ -91,15 +90,15 @@ function nums($table, ...$arg){
         $sql = $sql . $arg[1];
     }
 
-    echo $sql . "<br>";
+    // echo $sql . "<br>";
     // fetchColumn() 選取欄，預設為第一欄
     return $pdo->query($sql)->fetchColumn();
 }
 
-echo "<br><br>資料表筆數<br>";
-echo nums("admin");
-echo "<br><br>資料表筆數加條件<br>";
-echo nums("admin",["pw"=>"1234"]);
+// echo "<br><br>資料表筆數<br>";
+// echo nums("admin");
+// echo "<br><br>資料表筆數加條件<br>";
+// echo nums("admin",["pw"=>"1234"]);
 
 
 // 簡化 $pdo->query($sql)->fetchAll(); 
@@ -121,15 +120,15 @@ function del($table, ...$arg){
     }else{
         $sql = $sql . "`id`=$arg[0]";
     }
-    echo $sql."<br>";
+    // echo $sql."<br>";
     return $pdo->exec($sql);
 }
 
-echo "<br><br>刪除資料指定id<br>";
-del("admin", 5);
-echo "<br><br>刪除資料指定元素<br><br>";
-del("admin", ["acc"=>"bbb"]);
-echo "<br>";
+// echo "<br><br>刪除資料指定id<br>";
+// del("admin", 5);
+// echo "<br><br>刪除資料指定元素<br><br>";
+// del("admin", ["acc"=>"bbb"]);
+// echo "<br>";
 
 function to( $path){
     header("location:".$path);
@@ -156,14 +155,14 @@ function save($table, $data){
         $value="'" . implode("','",$data) . "'";
         $sql = " INSERT INTO $table ($key) VALUES ($value)";
     }
-    echo $sql;
-    // return $pdo->exec($sql);
+    // echo $sql;
+    return $pdo->exec($sql);
 }
 
-echo "Save update<br>";
-save("admin",find( "admin", 2));
-echo "<br><br>";
-echo "Save insert<br>";
-$data=[ "acc" => "zxc", "pw" => "456"];
-save("admin", $data);
+// echo "Save update<br>";
+// save("admin",find( "admin", 2));
+// echo "<br><br>";
+// echo "Save insert<br>";
+// $data=[ "acc" => "zxc", "pw" => "456"];
+// save("admin", $data);
 ?>
