@@ -2,7 +2,16 @@
 
 $dsn = "mysql:host=localhost;charset=utf8;dbname=db111";
 $pdo = new PDO($dsn, "root", "123");
+
+// 啟用 session
 session_start();
+
+if(empty($_SESSION['total'])){
+    $total = find("total",1);
+    $total['total']++;
+    $_SESSION['total'] = $total['total'];
+    save("total", $total);
+}
 
 // 資料表要開空值，如果沒開給空值會錯誤
 // 查詢及取得特定條件的全部資料
